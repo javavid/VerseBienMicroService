@@ -9,8 +9,16 @@
         <outputRelativeToContentRoot value="true" />
         <module name="microconfig" />
         <module name="microeureka" />
-        <module name="microusuario" />
         <module name="microgateway" />
+      </profile>
+      <profile name="Annotation profile for VerseBien" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar" />
+        </processorPath>
+        <module name="microusuario" />
       </profile>
     </annotationProcessing>
   </component>
