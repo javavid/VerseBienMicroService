@@ -4,9 +4,12 @@ import com.usuario.persistence.entity.Usuario;
 import com.usuario.persistence.entity.dao.interfaces.IUsuarioDAO;
 import com.usuario.presentacion.dto.UsuarioDTO;
 import com.usuario.servicio.interfaces.IUsuarioServicio;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -15,6 +18,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class UsuarioServicioImpl implements IUsuarioServicio {
+    @PersistenceContext
+    private EntityManager entityManager;
     @Autowired
     private IUsuarioDAO iUsuarioDAO;
     @Override
@@ -42,18 +47,27 @@ public class UsuarioServicioImpl implements IUsuarioServicio {
     }
 
     @Override
+    @Transactional
     public List<UsuarioDTO> postUsuario(UsuarioDTO usuario) {
         try {
+
             ModelMapper modelMapper = new ModelMapper();
             Usuario userEntity = modelMapper.map(usuario, Usuario.class);
-            this.iUsuarioDAO.postUsuario(userEntity);
-            return Collections.emptyList();
-        }catch (Exception e)
-        {
-            throw new UnsupportedOperationException("Error al Registrar");
-        }
 
+
+            entityManager.merge(userEntity);
+
+
+            return Collections.singletonList(modelMapper.map(userEntity, UsuarioDTO.class));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al registrar el usuario: " + e.getMessage(), e);
+        }
     }
+
+
+
+
 
     @Override
     public List<UsuarioDTO> putUsuario(Long id, UsuarioDTO usuarioUpDate) {
