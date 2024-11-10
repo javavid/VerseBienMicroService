@@ -6,13 +6,13 @@ spring:
     name: micro-usuario
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${DB_URL}
-    username: ${DB_USER_NAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:mysql://localhost:3306/verse_bien
+    username: 3d3r1gg5
+    password: m4y@v3rs3b13n
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
 

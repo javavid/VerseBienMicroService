@@ -2,32 +2,46 @@ package com.usuario.persistence.entity.dao.implementacion;
 
 import com.usuario.persistence.entity.Usuario;
 import com.usuario.persistence.entity.dao.interfaces.IUsuarioDAO;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+import java.util.Optional;
+@Repository
 public class UsuarioDaoImpl implements IUsuarioDAO {
+    @PersistenceContext
+    private EntityManager em;
+
     @Override
+    @Transactional(readOnly = true)
     public List<Usuario> getUsusarios() {
-        return null;
+        return this.em.createQuery("SELECT u FROM Usuario u").getResultList();
     }
 
     @Override
-    public List<Usuario> getIdUsuarios(Long id) {
-        return null;
+    @Transactional(readOnly = true)
+    public Optional<Usuario> getIdUsuarios(Long id) {
+        return Optional.ofNullable(this.em.find(Usuario.class, id));
     }
 
     @Override
-    public List<Usuario> postUsuario(Usuario usuario) {
-        return null;
+    @Transactional
+    public void postUsuario(Usuario usuario) {
+        this.em.persist(usuario);
+        this.em.flush();
     }
 
     @Override
-    public List<Usuario> putUsuario(Usuario usuario) {
-        return null;
+    @Transactional
+    public void putUsuario(Usuario usuario) {
+        this.em.merge(usuario);
     }
 
     @Override
-    public List<Usuario> deleteUsuario(Usuario usuario) {
-        return null;
+    @Transactional
+    public void deleteUsuario(Usuario usuario) {
+        this.em.remove(usuario);
     }
 }
