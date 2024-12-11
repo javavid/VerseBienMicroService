@@ -18,12 +18,14 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar" />
         </processorPath>
+        <module name="microcita" />
         <module name="microusuario" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="microcita" options="-parameters" />
       <module name="microconfig" options="-parameters" />
       <module name="microeureka" options="-parameters" />
       <module name="microgateway" options="-parameters" />

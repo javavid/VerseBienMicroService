@@ -17,12 +17,14 @@ public class UsuarioDaoImpl implements IUsuarioDAO {
     @Override
     @Transactional(readOnly = true)
     public List<Usuario> getUsusarios() {
+
         return this.em.createQuery("SELECT u FROM Usuario u").getResultList();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Optional<Usuario> getIdUsuarios(Long id) {
+
         return Optional.ofNullable(this.em.find(Usuario.class, id));
     }
 
@@ -36,12 +38,14 @@ public class UsuarioDaoImpl implements IUsuarioDAO {
     @Override
     @Transactional
     public void putUsuario(Usuario usuario) {
+
         this.em.merge(usuario);
     }
 
     @Override
     @Transactional
     public void deleteUsuario(Usuario usuario) {
+
         this.em.remove(usuario);
     }
 }
